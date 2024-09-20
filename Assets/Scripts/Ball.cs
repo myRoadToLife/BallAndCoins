@@ -26,14 +26,6 @@ public class Ball : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void InitInstance()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
-
     private void Update()
     {
         UserInput();
@@ -54,6 +46,13 @@ public class Ball : MonoBehaviour
             AddCoins();
             coin.gameObject.SetActive(false);
         }
+    }
+    private void InitInstance()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     private void Move()
