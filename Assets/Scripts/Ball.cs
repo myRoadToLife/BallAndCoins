@@ -21,8 +21,17 @@ public class Ball : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        InitInstance();
+
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void InitInstance()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     private void Update()
@@ -68,7 +77,7 @@ public class Ball : MonoBehaviour
 
     public void AddCoins()
     {
-        Coins ++;
+        Coins++;
         _scoreText.text = Coins.ToString("—чет: " + "00");
     }
 
