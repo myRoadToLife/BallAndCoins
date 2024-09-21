@@ -12,7 +12,9 @@ public class LogicGame : MonoBehaviour
     [SerializeField] private int _coinsCountToWin;
     [SerializeField] private float _allowedTime;
 
-    private Coin[] _allObjectsCoin;
+    [SerializeField] private BallMove _ball;
+
+    private AutomaticCoinRotation[] _allObjectsCoin;
 
     private float _time;
     private float _stopPlaytime = 0.0f;
@@ -24,7 +26,7 @@ public class LogicGame : MonoBehaviour
 
     private void Start()
     {
-        _allObjectsCoin = FindObjectsOfType<Coin>();
+        _allObjectsCoin = FindObjectsOfType<AutomaticCoinRotation>();
 
         _time = _allowedTime;
 
@@ -33,7 +35,7 @@ public class LogicGame : MonoBehaviour
 
     private void Update()
     {
-        Timer();
+        StartGameTimer();
 
         ConditionForVictory();
         ConditionForLosing();
@@ -52,7 +54,7 @@ public class LogicGame : MonoBehaviour
 
     private void ConditionForVictory()
     {
-        if (_time > 0 && Ball.Instance.Coins >= _coinsCountToWin)
+        if (_time > 0 && _ball.Coins >= _coinsCountToWin)
         {
             ViewText(Color.green, _winText);
             Time.timeScale = _stopPlaytime;
@@ -61,7 +63,7 @@ public class LogicGame : MonoBehaviour
 
     private void ConditionForLosing()
     {
-        if (_time == 0 && Ball.Instance.Coins != _coinsCountToWin)
+        if (_time == 0 && _ball.Coins != _coinsCountToWin)
         {
             ViewText(Color.red, _loseText);
             Time.timeScale = _stopPlaytime;
@@ -71,7 +73,7 @@ public class LogicGame : MonoBehaviour
     private void EnableAllObjectsCoin()
     {
 
-        foreach (Coin obj in _allObjectsCoin)
+        foreach (AutomaticCoinRotation obj in _allObjectsCoin)
         {
             if (!obj.gameObject.activeInHierarchy)
             {
@@ -79,7 +81,7 @@ public class LogicGame : MonoBehaviour
             }
         }
     }
-    private void Timer()
+    private void StartGameTimer()
     {
         _timerLable.text = _time.ToString("Время :" + " 00.00");
 
@@ -106,7 +108,7 @@ public class LogicGame : MonoBehaviour
         _timerLable.text = null;
         _gameOutcomeLable.text = null;
         Time.timeScale = _startPlaytime;
-        Ball.Instance.CoinCountReset();
-        Ball.Instance.StartPositionAndVelociti();
+        _ball.CoinCountReset();
+        _ball.StartPositionAndVelociti();
     }
 }

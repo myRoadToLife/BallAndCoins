@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class AutomaticCoinRotation : MonoBehaviour
 {
     [SerializeField] private float _speedRotation;
 
@@ -11,7 +11,7 @@ public class Coin : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
     
-    private void FixedUpdate()
+    private void Update()
     {
         _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(0, _speedRotation * Time.deltaTime, 0));
     }

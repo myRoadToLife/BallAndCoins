@@ -1,10 +1,8 @@
 using TMPro;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class BallMove : MonoBehaviour
 {
-    public static Ball Instance;
-
     [SerializeField] private float _forceMove = 14f;
     [SerializeField] private float _forceJump = 5f;
 
@@ -21,8 +19,6 @@ public class Ball : MonoBehaviour
 
     private void Awake()
     {
-        InitInstance();
-
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -39,20 +35,13 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Coin coin = other.GetComponent<Coin>();
+        AutomaticCoinRotation coin = other.GetComponent<AutomaticCoinRotation>();
 
         if (coin != null)
         {
             AddCoins();
             coin.gameObject.SetActive(false);
         }
-    }
-    private void InitInstance()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
     }
 
     private void Move()
